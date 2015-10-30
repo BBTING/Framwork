@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.util.Log;
-import android.view.View;
 
 import com.lite.face.framwork.R;
 import com.lite.face.framwork.bean.ExtraBean;
@@ -41,12 +40,12 @@ public class RxAndroidActivity extends BaseActivity {
         backgroundThread.start();
         backgroundHandler = new Handler(backgroundThread.getLooper());
 
-        findViewById(R.id.hello_tv).setOnClickListener(new View.OnClickListener() {
+       /* findViewById(R.id.hello_tv).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onRunSchedulerExampleButtonClicked();
             }
-        });
+        });*/
     }
 
     void onRunSchedulerExampleButtonClicked() {

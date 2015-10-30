@@ -4,6 +4,30 @@
     <file url="file://$PROJECT_DIR$/app/libs/library-1.0.19.jar" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/libs/okhttp-urlconnection-2.0.0.jar" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/lite/face/framwork/bean/JsonUtil.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/lite/face/framwork/ui/widget/BankPopupWindow.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/bank_pop_bg_shape.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/bank_popup_window_layout.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/layout_top_bar.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/jy_dingdan1.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/jy_dingdan2.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/ycp_back_1.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/values-1024x600" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/values-1024x768" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/values-1132x640" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/values-1136x640" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/values-1184x720" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/values-1196x720" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/values-1280x720" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/values-1280x768" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/values-1280x800" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/values-1812x1080" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/values-1920x1080" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/values-2560x1440" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/values-480x320" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/values-640x480" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/values-800x480" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/values-854x480" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/values-960x540" charset="GBK" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/x20"
+                android:background="#20000000"
+                android:orientation="vertical">
+
+    <Button
+        android:id="@+id/submit_btn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x88"
+        android:layout_marginLeft="@dimen/x30"
+        android:layout_marginRight="@dimen/x30"
+        android:layout_marginTop="@dimen/x30"
+        android:background="@drawable/bg_submit_btn"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:text="确认"
+        android:textColor="@color/white"
+        android:textSize="@dimen/x34"/>
+
+    <com.lite.face.framwork.ui.widget.FixedGridView
+        android:id="@+id/selecte_lv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:horizontalSpacing="@dimen/x8"
+        android:listSelector="@color/transparent_color"
+        android:minHeight="@dimen/y100"
+        android:numColumns="3"
+        android:layout_above="@+id/submit_btn"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="@dimen/x8"/>
+
+    <TextView
+        android:id="@+id/selecte_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/y30"
+        android:gravity="center"
+        android:layout_above="@+id/selecte_lv"
+        android:textColor="@color/cut_color"
+        android:textSize="16sp"/>
+
+</RelativeLayout>
