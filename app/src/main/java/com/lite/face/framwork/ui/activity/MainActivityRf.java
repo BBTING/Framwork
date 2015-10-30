@@ -177,7 +177,7 @@ public class MainActivityRf extends BaseActivity {
 
                     }
                 });
-                bankPopupWindow.initListView(Arrays.asList(BREATHING), mWidth);
+                bankPopupWindow.initListView(Arrays.asList(BREATHING), getDisplayMetrics().widthPixels - 20);
                 bankPopupWindow.showAtLocation(mTypeTv0, Gravity.BOTTOM, 0, 0);
                 break;
             case 4:

@@ -17,6 +17,7 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.PopupWindow;
@@ -52,7 +53,14 @@ public class BankPopupWindow extends PopupWindow {
         mWidth = width;
         if (mCommonAdapter == null) {
             mCommonAdapter = new GridViewAdapter(mContext, lists, width);
+            mCommonAdapter.setMultiSelect(true);
             mListView.setAdapter(mCommonAdapter);
+            mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    mCommonAdapter.setItemSelected(position);
+                }
+            });
         } else {
             mCommonAdapter.setDatas(lists);
             mCommonAdapter.notifyDataSetChanged();
@@ -156,7 +164,7 @@ public class BankPopupWindow extends PopupWindow {
                 viewHolder.getConvertView().setSelected(false);
                 viewHolder.setViewVisiable(R.id.selecte_iv, View.GONE);
             }
-            viewHolder.getConvertView().setLayoutParams(new GridView.LayoutParams(mGridViewWidth, (int) (mGridViewWidth * 1.25)));
+            viewHolder.getConvertView().setLayoutParams(new GridView.LayoutParams(mGridViewWidth, 108));
         }
     }
 
