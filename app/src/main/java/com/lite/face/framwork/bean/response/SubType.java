@@ -19,22 +19,25 @@ public class SubType implements Serializable {
 
     public List<InnerType> mInnerTypes;
 
-    public SubType(String title) {
-        this(title, false);
+    public final int mFract;
+
+    public SubType(String title, int fract) {
+        this(title, false, fract);
     }
 
-    public SubType(String title, boolean mutil) {
-        this(title, mutil, false);
+    public SubType(String title, boolean mutil, int fract) {
+        this(title, mutil, false, fract);
     }
 
-    public SubType(String title, boolean mutil, boolean selected) {
-        this(title, mutil, selected, null);
+    public SubType(String title, boolean mutil, boolean selected, int fract) {
+        this(title, mutil, selected, null, fract);
     }
 
-    public SubType(String title, boolean mutil, boolean selected, List<InnerType> innerTypes) {
+    public SubType(String title, boolean mutil, boolean selected, List<InnerType> innerTypes, int fract) {
         mTitle = title;
         mSelected = selected;
         mMutil = mutil;
         mInnerTypes = innerTypes;
+        mFract = fract;
     }
 }

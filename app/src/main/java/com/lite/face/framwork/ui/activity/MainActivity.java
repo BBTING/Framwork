@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.lite.face.framwork.R;
 import com.lite.face.framwork.bean.ExtraBean;
 import com.lite.face.framwork.bean.request.RequestBean;
-import com.lite.face.framwork.bean.response.BuildAsthmaType;
+import com.lite.face.framwork.bean.response.AsthmaFactory;
 import com.lite.face.framwork.bean.response.VersionBean;
 import com.lite.face.framwork.request.RequestPolicy;
 import com.lite.face.framwork.ui.base.AppConstants;
@@ -121,8 +121,8 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initSteps();
-        BuildAsthmaType buildAsthmaType = new BuildAsthmaType();
-        buildAsthmaType.initAsthmaData();
+        AsthmaFactory asthmaFactory = new AsthmaFactory();
+        asthmaFactory.initAsthmaData();
 
         Intent intent = new Intent(this, MainActivityRf.class);
         startActivityForResult(intent, 0);

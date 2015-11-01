@@ -11,5 +11,5 @@ import java.util.List;
  */
 public class AsthmaType implements Serializable {
 
-    List<PrimaryType> mPrimaryTypes;
+    public List<PrimaryType> mPrimaryTypes;
 }
