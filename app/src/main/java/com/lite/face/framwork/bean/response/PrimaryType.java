@@ -13,7 +13,7 @@ public class PrimaryType implements Serializable {
 
     public String mTitle;
 
-    public boolean mSelected;
+    public boolean mSelected = false;
 
     public List<SecondaryType> mSecondTypes;
 }
