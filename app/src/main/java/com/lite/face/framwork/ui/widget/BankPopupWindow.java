@@ -13,7 +13,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
@@ -30,20 +29,29 @@ import com.lite.face.framwork.ui.base.ViewHolder;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BankPopupWindow extends PopupWindow {
+public class BankPopupWindow extends PopupWindow implements View.OnClickListener {
 
 
     private View mMenuView;
     private GridView mListView;
     private Button mSubmit;
+    private Button mCancel;
     private TextView mTitle;
-    private OnClickListener mOnClickListener;
 
     private List<String> mStrings;
 
     public void setStrings(List<String> strings) {
         mStrings = strings;
+    }
 
+    private String mKey;
+
+    public void setKey(String key) {
+        mKey = key;
+    }
+
+    public void setCallback(Callback callback) {
+        mCallback = callback;
     }
 
     private GridViewAdapter mCommonAdapter;
@@ -70,7 +78,7 @@ public class BankPopupWindow extends PopupWindow {
     private int mWidth = 0;
     private Context mContext;
 
-    public BankPopupWindow(Activity context, OnClickListener onClickListener) {
+    public BankPopupWindow(Activity context) {
         super(context);
         mContext = context;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -78,8 +86,9 @@ public class BankPopupWindow extends PopupWindow {
         mListView = (GridView) mMenuView.findViewById(R.id.selecte_lv);
         mTitle = (TextView) mMenuView.findViewById(R.id.selecte_tv);
         mSubmit = (Button) mMenuView.findViewById(R.id.submit_btn);
-        mOnClickListener = onClickListener;
-
+        mCancel = (Button) mMenuView.findViewById(R.id.cancel_btn);
+        mSubmit.setOnClickListener(this);
+        mCancel.setOnClickListener(this);
         //设置SelectPicPopupWindow的View
         this.setContentView(mMenuView);
         //设置SelectPicPopupWindow弹出窗体的宽
@@ -104,8 +113,16 @@ public class BankPopupWindow extends PopupWindow {
 
     }
 
-    public void setOnClickListener(OnClickListener onClickListener) {
-        mOnClickListener = onClickListener;
+    private Callback mCallback;
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.submit_btn) {
+            if (mCallback != null) {
+                mCallback.callback("Selet", mCommonAdapter.getIntegers());
+            }
+        }
+        dismiss();
     }
 
     /**
@@ -121,11 +138,28 @@ public class BankPopupWindow extends PopupWindow {
             mMultiSelect = multi;
         }
 
+        public List<Integer> getIntegers() {
+            return mIntegers;
+        }
+
         public void setItemSelected(Integer item) {
             if (!mIntegers.contains(item)) {
                 if (!mMultiSelect) {
                     mIntegers.clear();
                 }
+                if (getItem(item).equals("其它")) {
+                    mIntegers.clear();
+                } else {
+                    List list = getDatas();
+                    if (list == null) {
+                        return;
+                    }
+                    int index = list.indexOf("其它");
+                    if (mIntegers.contains(index)) {
+                        mIntegers.remove((Integer)index);
+                    }
+                }
+
                 mIntegers.add(item);
             } else {
                 mIntegers.remove(item);
@@ -157,16 +191,19 @@ public class BankPopupWindow extends PopupWindow {
 
         protected void convert(ViewHolder viewHolder, String s, int position) {
             viewHolder.setText(R.id.item_tv, s);
-            if (mIntegers.contains((Integer) position)) {
+            if (mIntegers.contains(position)) {
                 viewHolder.getConvertView().setSelected(true);
                 viewHolder.setViewVisiable(R.id.selecte_iv, View.VISIBLE);
             } else {
                 viewHolder.getConvertView().setSelected(false);
                 viewHolder.setViewVisiable(R.id.selecte_iv, View.GONE);
             }
-            viewHolder.getConvertView().setLayoutParams(new GridView.LayoutParams(mGridViewWidth, 108));
+            viewHolder.getConvertView().setLayoutParams(new GridView.LayoutParams(mGridViewWidth - 60, 108));
         }
     }
 
+    public interface Callback {
+        void callback(String str, List<Integer> integers);
+    }
 
 }
