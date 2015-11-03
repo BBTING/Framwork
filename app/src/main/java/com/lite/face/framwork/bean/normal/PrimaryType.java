@@ -1,4 +1,4 @@
-package com.lite.face.framwork.bean.response;
+package com.lite.face.framwork.bean.normal;
 
 import java.io.Serializable;
 import java.util.List;
@@ -16,4 +16,5 @@ public class PrimaryType implements Serializable {
     public boolean mSelected = false;
 
     public List<SecondaryType> mSecondTypes;
+
 }

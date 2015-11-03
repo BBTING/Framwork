@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
-import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -23,13 +22,13 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.lite.face.framwork.R;
+import com.lite.face.framwork.bean.normal.InnerType;
 import com.lite.face.framwork.ui.base.CommonAdapter;
 import com.lite.face.framwork.util.ViewHolder;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class BankPopupWindow extends PopupWindow implements View.OnClickListener {
+public class InnerPopupWindow extends PopupWindow implements View.OnClickListener {
 
 
     private View mMenuView;
@@ -38,30 +37,18 @@ public class BankPopupWindow extends PopupWindow implements View.OnClickListener
     private Button mCancel;
     private TextView mTitle;
 
-    private List<String> mStrings;
+    private List<InnerType> mStrings;
 
-    public void setStrings(List<String> strings) {
+    public void setStrings(List<InnerType> strings) {
         mStrings = strings;
     }
 
-    private String mKey;
+    private ListViewAdapter mCommonAdapter;
 
-    public void setKey(String key) {
-        mKey = key;
-    }
-
-    public void setCallback(Callback callback) {
-        mCallback = callback;
-    }
-
-    private GridViewAdapter mCommonAdapter;
-    private boolean mDefaultMul = false;
-
-    public void initListView(List<String> lists, int width) {
+    public void initListView(List<InnerType> lists, int width) {
         mWidth = width;
         if (mCommonAdapter == null) {
-            mCommonAdapter = new GridViewAdapter(mContext, lists, width);
-            mCommonAdapter.setMultiSelect(true);
+            mCommonAdapter = new ListViewAdapter(mContext, lists, width);
             mListView.setAdapter(mCommonAdapter);
             mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -78,7 +65,13 @@ public class BankPopupWindow extends PopupWindow implements View.OnClickListener
     private int mWidth = 0;
     private Context mContext;
 
-    public BankPopupWindow(Activity context) {
+    private InnerCallback mInnerCallback;
+
+    public void setInnerCallback(InnerCallback innerCallback) {
+        mInnerCallback = innerCallback;
+    }
+
+    public InnerPopupWindow(Activity context) {
         super(context);
         mContext = context;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -113,13 +106,13 @@ public class BankPopupWindow extends PopupWindow implements View.OnClickListener
 
     }
 
-    private Callback mCallback;
-
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.submit_btn) {
-            if (mCallback != null) {
-                mCallback.callback("Selet", mCommonAdapter.getIntegers());
+        if (mInnerCallback != null) {
+            if (v.getId() == R.id.cancel_btn) {
+                mInnerCallback.callback(false);
+            } else {
+                mInnerCallback.callback(true);
             }
         }
         dismiss();
@@ -128,70 +121,38 @@ public class BankPopupWindow extends PopupWindow implements View.OnClickListener
     /**
      * GridView适配器
      */
-    private class GridViewAdapter extends CommonAdapter<String> {
-        private boolean mMultiSelect = false;
-        private List<Integer> mIntegers = new ArrayList<>();
-
+    private class ListViewAdapter extends CommonAdapter<InnerType> {
         private int mGridViewWidth = 100;
 
-        public void setMultiSelect(boolean multi) {
-            mMultiSelect = multi;
-        }
+        private List<InnerType> mInnerTypes;
 
-        public List<Integer> getIntegers() {
-            return mIntegers;
-        }
-
-        public void setItemSelected(Integer item) {
-            if (!mIntegers.contains(item)) {
-                if (!mMultiSelect) {
-                    mIntegers.clear();
-                }
-                if (getItem(item).equals("其它")) {
-                    mIntegers.clear();
-                } else {
-                    List list = getDatas();
-                    if (list == null) {
-                        return;
-                    }
-                    int index = list.indexOf("其它");
-                    if (mIntegers.contains(index)) {
-                        mIntegers.remove((Integer)index);
-                    }
-                }
-
-                mIntegers.add(item);
+        public void setItemSelected(int index) {
+            mInnerTypes.get(index).mSelected = !mInnerTypes.get(index).mSelected;
+            //取消其它选项
+            if (index != mInnerTypes.size() - 1) {
+                mInnerTypes.get(mInnerTypes.size() - 1).mSelected = false;
             } else {
-                mIntegers.remove(item);
+                for (int j = 0; j < mInnerTypes.size() - 1; j++) {
+                    mInnerTypes.get(j).mSelected = false;
+                }
             }
             notifyDataSetChanged();
         }
 
-        public GridViewAdapter(Context context, List<String> datas, int width) {
+        public ListViewAdapter(Context context, List<InnerType> datas, int width) {
             this(context, datas, width, false);
         }
 
-        public GridViewAdapter(Context context, List<String> datas, int width, boolean isMulti) {
+        public ListViewAdapter(Context context, List<InnerType> datas, int width, boolean isMulti) {
             super(context, R.layout.item_gridview_layout, datas);
+            mInnerTypes = datas;
             mGridViewWidth = width;
-            mMultiSelect = isMulti;
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder viewHolder = ViewHolder.get(mContext, convertView, parent, mLayoutResource, position);
-            convert(viewHolder, getItem(position), position);
-            return viewHolder.getConvertView();
-        }
-
-        @Override
-        protected void convert(ViewHolder viewHolder, String s) {
-            //do nothing
-        }
-
-        protected void convert(ViewHolder viewHolder, String s, int position) {
-            viewHolder.setText(R.id.item_tv, s);
-            if (mIntegers.contains(position)) {
+        protected void convert(ViewHolder viewHolder, InnerType s) {
+            viewHolder.setText(R.id.item_tv, s.mTitle);
+            if (s.mSelected) {
                 viewHolder.getConvertView().setSelected(true);
                 viewHolder.setViewVisiable(R.id.selecte_iv, View.VISIBLE);
             } else {
@@ -200,10 +161,10 @@ public class BankPopupWindow extends PopupWindow implements View.OnClickListener
             }
             viewHolder.getConvertView().setLayoutParams(new GridView.LayoutParams(mGridViewWidth - 60, 108));
         }
+
     }
 
-    public interface Callback {
-        void callback(String str, List<Integer> integers);
+    public interface InnerCallback {
+        void callback(boolean confirm);
     }
-
 }

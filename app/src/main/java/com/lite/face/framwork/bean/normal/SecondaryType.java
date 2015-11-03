@@ -1,4 +1,4 @@
-package com.lite.face.framwork.bean.response;
+package com.lite.face.framwork.bean.normal;
 
 import java.io.Serializable;
 import java.util.List;
@@ -15,5 +15,8 @@ public class SecondaryType implements Serializable {
 
     public boolean mMulti;
 
+    public int mPriority;
+
     public List<SubType> mSubTypes;
+
 }

@@ -1,4 +1,4 @@
-package com.lite.face.framwork.bean.response;
+package com.lite.face.framwork.bean.normal;
 
 import java.io.Serializable;
 
@@ -18,8 +18,8 @@ public class InnerType implements Serializable{
         this(title, false);
     }
 
-    public InnerType(String title, boolean is) {
+    public InnerType(String title, boolean selected) {
         mTitle = title;
-        mSelected = is;
+        mSelected = selected;
     }
 }

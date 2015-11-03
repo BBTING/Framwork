@@ -28,5 +28,34 @@
         android:clickable="true"
         android:textSize="@dimen/x32"/>
 
+    <TextView
+        android:id="@+id/header_right_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:paddingLeft="@dimen/x18"
+        android:paddingRight="@dimen/x18"
+        android:layout_alignParentRight="true"
+        android:text="提交"
+        android:textColor="@color/font_white_color"
+        android:clickable="true"
+        android:gravity="center"
+        android:textSize="@dimen/x28"/>
+
+    <ImageView
+        android:id="@+id/header_right_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:paddingLeft="@dimen/x25"
+        android:paddingRight="@dimen/x25"
+        android:visibility="gone"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/font_white_color"
+        android:clickable="true"
+        android:src="@mipmap/wd_yhk_gd_01"
+        android:gravity="center"
+        android:textSize="@dimen/x28"/>
+
 </RelativeLayout>
 

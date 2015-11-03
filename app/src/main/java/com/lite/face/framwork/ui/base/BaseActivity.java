@@ -1,7 +1,5 @@
 package com.lite.face.framwork.ui.base;
 
-import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v4.app.FragmentActivity;
 
 import com.lite.face.framwork.bean.ExtraBean;
@@ -18,15 +16,9 @@ import java.util.Observer;
  */
 public abstract class BaseActivity extends FragmentActivity implements Observer {
 
-    protected final String TAG = getClass().getSimpleName();
+    protected final String TAG = getClass().getSimpleName() + "_";
 
     private RequestPluginPools mRequestPluginPools = AppContext.getAppContext().getRequestPoolsInstance();
-
-
-    @Override
-    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
-    }
 
     @Override
     protected void onDestroy() {

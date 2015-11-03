@@ -1,4 +1,4 @@
-package com.lite.face.framwork.ui.base;
+package com.lite.face.framwork.util;
 
 import android.content.Context;
 import android.graphics.Bitmap;

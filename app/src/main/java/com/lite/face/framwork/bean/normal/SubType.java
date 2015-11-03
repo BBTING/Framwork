@@ -1,4 +1,4 @@
-package com.lite.face.framwork.bean.response;
+package com.lite.face.framwork.bean.normal;
 
 import java.io.Serializable;
 import java.util.List;
@@ -40,4 +40,5 @@ public class SubType implements Serializable {
         mInnerTypes = innerTypes;
         mFract = fract;
     }
+
 }

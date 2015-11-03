@@ -1,4 +1,4 @@
-package com.lite.face.framwork.bean.response;
+package com.lite.face.framwork.bean.normal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,13 +10,6 @@ import java.util.List;
  * Description:
  */
 public class AsthmaFactory {
-
-    //三级标题
-    private String[] SUBSPICYFOOD = new String[]{"辣椒", "花椒", "其它"};
-    private String[] SUBSEAFOOD = new String[]{"虾", "蟹", "鱼", "其它"};
-    private String[] SUBALLERGYFOOD = new String[]{"鸡蛋", "豆类", "牛奶", "其它"};
-    private String[] SUBPETS = new String[]{"猫", "狗", "其它"};
-    private String[] SUBDRUGS = new String[]{"抗生素", "阿司匹林", "其它"};
 
     public  AsthmaType asthmaType;
 
@@ -71,6 +64,7 @@ public class AsthmaFactory {
         secondaryType.mMulti = false;//subType只能单选
         secondaryType.mTitle = "行动受限(单选)";
         secondaryType.mSubTypes = subTypes;
+        secondaryType.mPriority = 4;
         return secondaryType;
     }
 
@@ -93,6 +87,7 @@ public class AsthmaFactory {
         secondaryType.mMulti = false;
         secondaryType.mTitle = "情绪异常(单选)";
         secondaryType.mSubTypes = subTypes;
+        secondaryType.mPriority = 4;
         return secondaryType;
     }
 
@@ -120,6 +115,7 @@ public class AsthmaFactory {
         secondaryType.mMulti = false;
         secondaryType.mTitle = "峰值仪(单选)";
         secondaryType.mSubTypes = subTypes;
+        secondaryType.mPriority = 4;
         return secondaryType;
     }
 
@@ -149,6 +145,7 @@ public class AsthmaFactory {
         secondaryType.mMulti = true;
         secondaryType.mTitle = "呼吸问题(多选)";
         secondaryType.mSubTypes = subTypes;
+        secondaryType.mPriority = 2;
         return secondaryType;
     }
 
@@ -172,6 +169,7 @@ public class AsthmaFactory {
         secondaryType.mMulti = false;
         secondaryType.mTitle = "夜间症状(单选)";
         secondaryType.mSubTypes = subTypes;
+        secondaryType.mPriority = 2;
         return secondaryType;
     }
 
@@ -200,6 +198,7 @@ public class AsthmaFactory {
         secondaryType.mMulti = false;
         secondaryType.mTitle = "睡眠(单选)";
         secondaryType.mSubTypes = subTypes;
+        secondaryType.mPriority = 1;
         return secondaryType;
     }
 
@@ -208,7 +207,7 @@ public class AsthmaFactory {
     private PrimaryType buildPrimaryType5() {
         PrimaryType primaryType = new PrimaryType();
         primaryType.mSecondTypes = new ArrayList<>(1);
-        primaryType.mSecondTypes.add(build40());
+        primaryType.mSecondTypes.add(build50());
         primaryType.mTitle = "大便(单选)";
         return primaryType;
     }
@@ -226,6 +225,7 @@ public class AsthmaFactory {
         secondaryType.mMulti = false;
         secondaryType.mTitle = "大便(单选)";
         secondaryType.mSubTypes = subTypes;
+        secondaryType.mPriority = 1;
         return secondaryType;
     }
 
@@ -252,6 +252,7 @@ public class AsthmaFactory {
         secondaryType.mMulti = false;
         secondaryType.mTitle = "哮喘用药(单选)";
         secondaryType.mSubTypes = subTypes;
+        secondaryType.mPriority = 11;
         return secondaryType;
     }
 
@@ -274,6 +275,7 @@ public class AsthmaFactory {
         SecondaryType secondaryType = new SecondaryType();
         secondaryType.mMulti = false;
         secondaryType.mTitle = "额外哮喘用药(单选)";
+        secondaryType.mPriority = 11;
         secondaryType.mSubTypes = subTypes;
         return secondaryType;
     }
@@ -304,6 +306,7 @@ public class AsthmaFactory {
         secondaryType.mMulti = false;
         secondaryType.mTitle = "吸烟或二手烟(单选)";
         secondaryType.mSubTypes = subTypes;
+        secondaryType.mPriority = 11;
         return secondaryType;
     }
 
@@ -331,6 +334,7 @@ public class AsthmaFactory {
         subType.mInnerTypes.add(new InnerType("辣椒"));
         subType.mInnerTypes.add(new InnerType("花椒"));
         subType.mInnerTypes.add(new InnerType("其它"));
+        secondaryType.mPriority = 0;
         return secondaryType;
     }
 
@@ -359,6 +363,7 @@ public class AsthmaFactory {
         subType.mInnerTypes.add(new InnerType("蟹"));
         subType.mInnerTypes.add(new InnerType("鱼"));
         subType.mInnerTypes.add(new InnerType("其它"));
+        secondaryType.mPriority = 0;
         return secondaryType;
     }
 
@@ -387,6 +392,7 @@ public class AsthmaFactory {
         subType.mInnerTypes.add(new InnerType("豆类"));
         subType.mInnerTypes.add(new InnerType("牛奶"));
         subType.mInnerTypes.add(new InnerType("其它"));
+        secondaryType.mPriority = 0;
         return secondaryType;
     }
 
@@ -414,6 +420,7 @@ public class AsthmaFactory {
         subType.mInnerTypes.add(new InnerType("猫"));
         subType.mInnerTypes.add(new InnerType("狗"));
         subType.mInnerTypes.add(new InnerType("其它"));
+        secondaryType.mPriority = 0;
         return secondaryType;
     }
 
@@ -441,6 +448,7 @@ public class AsthmaFactory {
         subType.mInnerTypes.add(new InnerType("抗生素"));
         subType.mInnerTypes.add(new InnerType("阿司匹林"));
         subType.mInnerTypes.add(new InnerType("其它"));
+        secondaryType.mPriority = 0;
         return secondaryType;
     }
 
@@ -466,6 +474,7 @@ public class AsthmaFactory {
         secondaryType.mMulti = false;
         secondaryType.mTitle = "散步慢走(单选)";
         secondaryType.mSubTypes = subTypes;
+        secondaryType.mPriority = 21;
         return secondaryType;
     }
 
@@ -491,6 +500,7 @@ public class AsthmaFactory {
         secondaryType.mMulti = false;
         secondaryType.mTitle = "呼吸操(单选)";
         secondaryType.mSubTypes = subTypes;
+        secondaryType.mPriority = 21;
         return secondaryType;
     }
 
@@ -499,7 +509,7 @@ public class AsthmaFactory {
         PrimaryType primaryType = new PrimaryType();
         primaryType.mSecondTypes = new ArrayList<>(1);
         primaryType.mSecondTypes.add(build160());
-        primaryType.mTitle = "呼吸操(单选)";
+        primaryType.mTitle = "自我感觉(单选)";
         return primaryType;
     }
 
@@ -516,6 +526,7 @@ public class AsthmaFactory {
         secondaryType.mMulti = false;
         secondaryType.mTitle = "自我感觉(单选)";
         secondaryType.mSubTypes = subTypes;
+        secondaryType.mPriority = 3;
         return secondaryType;
     }
 }

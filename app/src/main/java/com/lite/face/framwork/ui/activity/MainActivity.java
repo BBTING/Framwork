@@ -16,13 +16,13 @@ import android.widget.TextView;
 import com.lite.face.framwork.R;
 import com.lite.face.framwork.bean.ExtraBean;
 import com.lite.face.framwork.bean.request.RequestBean;
-import com.lite.face.framwork.bean.response.AsthmaFactory;
-import com.lite.face.framwork.bean.response.VersionBean;
+import com.lite.face.framwork.bean.normal.AsthmaFactory;
+import com.lite.face.framwork.bean.normal.VersionBean;
 import com.lite.face.framwork.request.RequestPolicy;
 import com.lite.face.framwork.ui.base.AppConstants;
 import com.lite.face.framwork.ui.base.BaseActivity;
 import com.lite.face.framwork.ui.base.CommonAdapter;
-import com.lite.face.framwork.ui.base.ViewHolder;
+import com.lite.face.framwork.util.ViewHolder;
 
 import java.util.ArrayList;
 import java.util.Arrays;

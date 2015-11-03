@@ -1,4 +1,4 @@
-package com.lite.face.framwork.bean.response;
+package com.lite.face.framwork.bean.normal;
 
 /**
  * Created by whoislcj on 2015/10/28 - 15:01.

@@ -1,6 +1,7 @@
 package com.lite.face.framwork.ui.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
@@ -17,8 +18,8 @@ import com.lite.face.framwork.R;
 import com.lite.face.framwork.bean.ExtraBean;
 import com.lite.face.framwork.ui.base.BaseActivity;
 import com.lite.face.framwork.ui.base.CommonAdapter;
-import com.lite.face.framwork.ui.base.ViewHolder;
-import com.lite.face.framwork.ui.fragment.PreferenceUtil;
+import com.lite.face.framwork.util.ViewHolder;
+import com.lite.face.framwork.util.PreferenceUtil;
 import com.lite.face.framwork.ui.widget.BankPopupWindow;
 import com.lite.face.framwork.ui.widget.FixedGridView;
 
@@ -104,6 +105,8 @@ public class MainActivityRf extends BaseActivity {
         setContentView(R.layout.activity_main_rf);
         ButterKnife.bind(this);
         initSteps();
+        Intent intent = new Intent(this, ReseachActivity.class);
+        startActivityForResult(intent, 100);
     }
 
     @Override
@@ -395,26 +398,26 @@ public class MainActivityRf extends BaseActivity {
     };
 
     private void savePrimaryString(String key, String value) {
-        key = getImei() + "_primary_" + key;
+        key = getDeviceId() + "_primary_" + key;
         PreferenceUtil.setPrefString(this, key, value);
     }
 
     private String getPrimaryString(String key) {
-        key = getImei() + "_primary_" + key;
+        key = getDeviceId() + "_primary_" + key;
         return PreferenceUtil.getPrefString(this, key, null);
     }
     private void saveSecondaryString(String key, String value) {
-        key = getImei() + "_secondary_" + key;
+        key = getDeviceId() + "_secondary_" + key;
         PreferenceUtil.setPrefString(this, key, value);
     }
 
     private String getSecondaryString(String key) {
-        key = getImei() + "_secondary_" + key;
+        key = getDeviceId() + "_secondary_" + key;
         return PreferenceUtil.getPrefString(this, key, null);
     }
 
 
-    public String getImei() {
+    public String getDeviceId() {
         TelephonyManager tel = (TelephonyManager) getApplication().getSystemService(Context.TELEPHONY_SERVICE);
         return tel.getDeviceId();
     }
