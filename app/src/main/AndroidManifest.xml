@@ -55,6 +55,10 @@
         <activity
             android:name=".ui.activity.SelectUserActivity"
             android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".ui.activity.RestActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

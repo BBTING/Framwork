@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -14,6 +15,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.easybenefit.commons.rest.RestClientContext;
+import com.easybenefit.commons.rest.ServiceCallback;
 import com.lite.face.framwork.R;
 import com.lite.face.framwork.bean.ExtraBean;
 import com.lite.face.framwork.bean.normal.AsthmaFactory;
@@ -22,11 +25,12 @@ import com.lite.face.framwork.bean.normal.InnerType;
 import com.lite.face.framwork.bean.normal.PrimaryType;
 import com.lite.face.framwork.bean.normal.SecondaryType;
 import com.lite.face.framwork.bean.normal.SubType;
+import com.lite.face.framwork.inteface.ClientService;
 import com.lite.face.framwork.ui.base.BaseActivity;
-import com.lite.face.framwork.util.CommonAdapter;
-import com.lite.face.framwork.util.ViewHolder;
 import com.lite.face.framwork.ui.widget.FixedGridView;
 import com.lite.face.framwork.ui.widget.InnerPopupWindow;
+import com.lite.face.framwork.util.CommonAdapter;
+import com.lite.face.framwork.util.ViewHolder;
 
 import java.util.List;
 
@@ -35,6 +39,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ReseachActivity extends BaseActivity {
+
 
     @Bind(R.id.type_lv)
     ListView mPrimaryLv;
@@ -51,6 +56,8 @@ public class ReseachActivity extends BaseActivity {
 
     private long mExitTime;
 
+    private static boolean DEBUG = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +69,9 @@ public class ReseachActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        if (DEBUG) {
+            doTest();
+        }
     }
 
     @Override
@@ -78,6 +88,31 @@ public class ReseachActivity extends BaseActivity {
         initPrimaryTitlesLv();
         mPrimaryLv.performItemClick(mPrimaryLv.getChildAt(0), 0, -1);
     }
+
+    @Override
+    protected void initOthers() {
+        super.initOthers();
+
+    }
+
+    private void doTest() {
+
+        ClientService userService = RestClientContext.create(ClientService.class);
+
+        userService.doSomething("key", mServiceCallback);
+    }
+
+    private ServiceCallback<String> mServiceCallback = new ServiceCallback<String>() {
+        @Override
+        public void onFailed(String statusCode, String errorMessage) {
+            Log.i(TAG, errorMessage + "");
+        }
+
+        @Override
+        public void onSuccess(String response) {
+            Log.i(TAG, response + "");
+        }
+    };
 
     private AsthmaType mAsthmaType;
 

@@ -1,11 +1,11 @@
 package com.lite.face.framwork.request;
 
+import com.easybenefit.commons.rest.impl.DefaultHttpClient;
 import com.lite.face.framwork.bean.ExtraBean;
 import com.lite.face.framwork.bean.JsonUtil;
 import com.lite.face.framwork.bean.request.RequestBean;
 import com.lite.face.framwork.inteface.RequestCallback;
 import com.lite.face.framwork.inteface.RequestPlugin;
-import com.lite.face.framwork.request.net.AppHttpClient;
 import com.squareup.okhttp.Request;
 
 import java.util.HashMap;
@@ -49,7 +49,7 @@ public class HttpRequestPlugin implements RequestPlugin {
      * @param extraBean
      */
     private void doGetRequest(final ExtraBean extraBean) {
-        AppHttpClient.getAsyn(extraBean.mRequestObj.mUrl, new AppHttpClient.ResultCallback<String>() {
+        DefaultHttpClient.get(extraBean.mRequestObj.mUrl, new DefaultHttpClient.ResultCallback<String>() {
             @Override
             public void onError(Request request, Exception e) {
                 extraBean.mResponseObj = e;
@@ -75,7 +75,7 @@ public class HttpRequestPlugin implements RequestPlugin {
      * @param extraBean
      */
     private void doPostRequest(final ExtraBean extraBean) {
-        AppHttpClient.postAsyn(extraBean.mRequestObj.mUrl, extraBean.mRequestObj.mParams, new AppHttpClient.ResultCallback<String>() {
+        DefaultHttpClient.post(extraBean.mRequestObj.mUrl, extraBean.mRequestObj.mParams, new DefaultHttpClient.ResultCallback<String>() {
             @Override
             public void onError(Request request, Exception e) {
                 extraBean.mResponseObj = e;

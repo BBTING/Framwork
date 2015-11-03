@@ -1,13 +1,7 @@
-package com.lite.face.framwork.request.net;
+package com.easybenefit.commons.rest.impl;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.DisplayMetrics;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.google.gson.Gson;
 import com.google.gson.internal.$Gson$Types;
@@ -26,7 +20,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.net.CookieManager;
@@ -60,43 +53,38 @@ import javax.net.ssl.X509TrustManager;
  * Copyright: 杭州医本健康科技有限公司(2014-2015)
  * Description:
  */
-public class AppHttpClient {
-    private static final String TAG = "AppHttpClient";
+public class DefaultHttpClient {
+    private static final String TAG = "DefaultHttpClient";
 
-    private static AppHttpClient mInstance;
+    private static DefaultHttpClient mInstance;
 
     private Gson mGson;
     private Handler mDelivery;
     private OkHttpClient mOkHttpClient;
 
-
-    private HttpsDelegate mHttpsDelegate = new HttpsDelegate();
-    private DownloadDelegate mDownloadDelegate = new DownloadDelegate();
-    private DisplayImageDelegate mDisplayImageDelegate = new DisplayImageDelegate();
     private GetDelegate mGetDelegate = new GetDelegate();
-    private UploadDelegate mUploadDelegate = new UploadDelegate();
     private PostDelegate mPostDelegate = new PostDelegate();
+    private HttpsDelegate mHttpsDelegate = new HttpsDelegate();
+    private UploadDelegate mUploadDelegate = new UploadDelegate();
 
-    private AppHttpClient() {
+    private DefaultHttpClient() {
         mOkHttpClient = new OkHttpClient();
         mOkHttpClient.setCookieHandler(new CookieManager(null, CookiePolicy.ACCEPT_ORIGINAL_SERVER));
         mDelivery = new Handler(Looper.getMainLooper());
         mGson = new Gson();
-
         mOkHttpClient.setHostnameVerifier(new HostnameVerifier() {
             @Override
             public boolean verify(String hostname, SSLSession session) {
                 return true;
             }
         });
-
     }
 
-    public static AppHttpClient getInstance() {
+    public static DefaultHttpClient getInstance() {
         if (mInstance == null) {
-            synchronized (AppHttpClient.class) {
+            synchronized (DefaultHttpClient.class) {
                 if (mInstance == null) {
-                    mInstance = new AppHttpClient();
+                    mInstance = new DefaultHttpClient();
                 }
             }
         }
@@ -115,29 +103,8 @@ public class AppHttpClient {
         return mHttpsDelegate;
     }
 
-    private DownloadDelegate _getDownloadDelegate() {
-        return mDownloadDelegate;
-    }
-
-    private DisplayImageDelegate _getDisplayImageDelegate() {
-        return mDisplayImageDelegate;
-    }
-
     private UploadDelegate _getUploadDelegate() {
         return mUploadDelegate;
-    }
-
-
-    public static DisplayImageDelegate getDisplayImageDelegate() {
-        return getInstance()._getDisplayImageDelegate();
-    }
-
-    public static DownloadDelegate getDownloadDelegate() {
-        return getInstance()._getDownloadDelegate();
-    }
-
-    public static UploadDelegate getUploadDelegate() {
-        return getInstance()._getUploadDelegate();
     }
 
     public static HttpsDelegate getHttpsDelegate() {
@@ -148,38 +115,38 @@ public class AppHttpClient {
      * ============Get方便的访问方式============
      */
 
-    public static void getAsyn(String url, ResultCallback callback) {
+    public static void get(String url, ResultCallback callback) {
         getInstance().getGetDelegate().getAsyn(url, callback, null);
     }
 
-    public static void getAsyn(String url, ResultCallback callback, Object tag) {
+    public static void get(String url, ResultCallback callback, Object tag) {
         getInstance().getGetDelegate().getAsyn(url, callback, tag);
     }
 
     /**
      * ============POST方便的访问方式===============
      */
-    public static void postAsyn(String url, Param[] params, final ResultCallback callback) {
+    public static void post(String url, Param[] params, final ResultCallback callback) {
         getInstance().getPostDelegate().postAsyn(url, params, callback, null);
     }
 
-    public static void postAsyn(String url, Map<String, String> params, final ResultCallback callback) {
+    public static void post(String url, Map<String, String> params, final ResultCallback callback) {
         getInstance().getPostDelegate().postAsyn(url, params, callback, null);
     }
 
-    public static void postAsyn(String url, String bodyStr, final ResultCallback callback) {
+    public static void post(String url, String bodyStr, final ResultCallback callback) {
         getInstance().getPostDelegate().postAsyn(url, bodyStr, callback, null);
     }
 
-    public static void postAsyn(String url, Param[] params, final ResultCallback callback, Object tag) {
+    public static void post(String url, Param[] params, final ResultCallback callback, Object tag) {
         getInstance().getPostDelegate().postAsyn(url, params, callback, tag);
     }
 
-    public static void postAsyn(String url, Map<String, String> params, final ResultCallback callback, Object tag) {
+    public static void post(String url, Map<String, String> params, final ResultCallback callback, Object tag) {
         getInstance().getPostDelegate().postAsyn(url, params, callback, tag);
     }
 
-    public static void postAsyn(String url, String bodyStr, final ResultCallback callback, Object tag) {
+    public static void post(String url, String bodyStr, final ResultCallback callback, Object tag) {
         getInstance().getPostDelegate().postAsyn(url, bodyStr, callback, tag);
     }
 
@@ -369,31 +336,6 @@ public class AppHttpClient {
         private final MediaType MEDIA_TYPE_STREAM = MediaType.parse("application/octet-stream;charset=utf-8");
         private final MediaType MEDIA_TYPE_STRING = MediaType.parse("text/plain;charset=utf-8");
 
-        public Response post(String url, Param[] params) throws IOException {
-            return post(url, params, null);
-        }
-
-        /**
-         * 同步的Post请求
-         */
-        public Response post(String url, Param[] params, Object tag) throws IOException {
-            Request request = buildPostFormRequest(url, params, tag);
-            Response response = mOkHttpClient.newCall(request).execute();
-            return response;
-        }
-
-        public String postAsString(String url, Param[] params) throws IOException {
-            return postAsString(url, params, null);
-        }
-
-        /**
-         * 同步的Post请求
-         */
-        public String postAsString(String url, Param[] params, Object tag) throws IOException {
-            Response response = post(url, params, tag);
-            return response.body().string();
-        }
-
         public void postAsyn(String url, Map<String, String> params, final ResultCallback callback) {
             postAsyn(url, params, callback, null);
         }
@@ -539,7 +481,7 @@ public class AppHttpClient {
 
     }
 
-    //====================GetDelegate=======================
+    //====================GetRequest=======================
     public class GetDelegate {
 
         private Request buildGetRequest(String url, Object tag) {
@@ -688,86 +630,6 @@ public class AppHttpClient {
         }
 
     }
-
-    //====================DisplayImageDelegate=======================
-
-    /**
-     * 加载图片相关
-     */
-    public class DisplayImageDelegate {
-        /**
-         * 加载图片
-         */
-        public void displayImage(final ImageView view, final String url, final int errorResId, final Object tag) {
-            final Request request = new Request.Builder()
-                    .url(url)
-                    .build();
-            Call call = mOkHttpClient.newCall(request);
-            call.enqueue(new Callback() {
-                @Override
-                public void onFailure(Request request, IOException e) {
-                    setErrorResId(view, errorResId);
-                }
-
-                @Override
-                public void onResponse(Response response) {
-                    InputStream is = null;
-                    try {
-                        is = response.body().byteStream();
-                        ImageUtils.ImageSize actualImageSize = ImageUtils.getImageSize(is);
-                        ImageUtils.ImageSize imageViewSize = ImageUtils.getImageViewSize(view);
-                        int inSampleSize = ImageUtils.calculateInSampleSize(actualImageSize, imageViewSize);
-                        try {
-                            is.reset();
-                        } catch (IOException e) {
-                            response = mGetDelegate.get(url, tag);
-                            is = response.body().byteStream();
-                        }
-
-                        BitmapFactory.Options ops = new BitmapFactory.Options();
-                        ops.inJustDecodeBounds = false;
-                        ops.inSampleSize = inSampleSize;
-                        final Bitmap bm = BitmapFactory.decodeStream(is, null, ops);
-                        mDelivery.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                view.setImageBitmap(bm);
-                            }
-                        });
-                    } catch (Exception e) {
-                        setErrorResId(view, errorResId);
-
-                    } finally {
-                        if (is != null) try {
-                            is.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            });
-
-
-        }
-
-        public void displayImage(final ImageView view, String url) {
-            displayImage(view, url, -1, null);
-        }
-
-        public void displayImage(final ImageView view, String url, Object tag) {
-            displayImage(view, url, -1, tag);
-        }
-
-        private void setErrorResId(final ImageView view, final int errorResId) {
-            mDelivery.post(new Runnable() {
-                @Override
-                public void run() {
-                    view.setImageResource(errorResId);
-                }
-            });
-        }
-    }
-
 
     //====================DownloadDelegate=======================
 
@@ -945,14 +807,14 @@ public class AppHttpClient {
 
 
         public class MyTrustManager implements X509TrustManager {
-            private X509TrustManager defaultTrustManager;
-            private X509TrustManager localTrustManager;
+            private X509TrustManager mX509TrustManager;
+            private X509TrustManager mLocalTrustManager;
 
             public MyTrustManager(X509TrustManager localTrustManager) throws NoSuchAlgorithmException, KeyStoreException {
-                TrustManagerFactory var4 = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
-                var4.init((KeyStore) null);
-                defaultTrustManager = chooseTrustManager(var4.getTrustManagers());
-                this.localTrustManager = localTrustManager;
+                TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+                trustManagerFactory.init((KeyStore) null);
+                mX509TrustManager = chooseTrustManager(trustManagerFactory.getTrustManagers());
+                this.mLocalTrustManager = localTrustManager;
             }
 
 
@@ -964,9 +826,9 @@ public class AppHttpClient {
             @Override
             public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
                 try {
-                    defaultTrustManager.checkServerTrusted(chain, authType);
+                    mX509TrustManager.checkServerTrusted(chain, authType);
                 } catch (CertificateException ce) {
-                    localTrustManager.checkServerTrusted(chain, authType);
+                    mLocalTrustManager.checkServerTrusted(chain, authType);
                 }
             }
 
@@ -977,164 +839,6 @@ public class AppHttpClient {
             }
         }
 
-    }
-
-    //====================ImageUtils=======================
-    public static class ImageUtils {
-        /**
-         * 根据InputStream获取图片实际的宽度和高度
-         *
-         * @param imageStream
-         * @return
-         */
-        public static ImageSize getImageSize(InputStream imageStream) {
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inJustDecodeBounds = true;
-            BitmapFactory.decodeStream(imageStream, null, options);
-            return new ImageSize(options.outWidth, options.outHeight);
-        }
-
-        public static class ImageSize {
-            int width;
-            int height;
-
-            public ImageSize() {
-            }
-
-            public ImageSize(int width, int height) {
-                this.width = width;
-                this.height = height;
-            }
-
-            @Override
-            public String toString() {
-                return "ImageSize{" +
-                        "width=" + width +
-                        ", height=" + height +
-                        '}';
-            }
-        }
-
-        public static int calculateInSampleSize(ImageSize srcSize, ImageSize targetSize) {
-            // 源图片的宽度
-            int width = srcSize.width;
-            int height = srcSize.height;
-            int inSampleSize = 1;
-
-            int reqWidth = targetSize.width;
-            int reqHeight = targetSize.height;
-
-            if (width > reqWidth && height > reqHeight) {
-                // 计算出实际宽度和目标宽度的比率
-                int widthRatio = Math.round((float) width / (float) reqWidth);
-                int heightRatio = Math.round((float) height / (float) reqHeight);
-                inSampleSize = Math.max(widthRatio, heightRatio);
-            }
-            return inSampleSize;
-        }
-
-        /**
-         * 根据ImageView获适当的压缩的宽和高
-         *
-         * @param view
-         * @return
-         */
-        public static ImageSize getImageViewSize(View view) {
-
-            ImageSize imageSize = new ImageSize();
-
-            imageSize.width = getExpectWidth(view);
-            imageSize.height = getExpectHeight(view);
-
-            return imageSize;
-        }
-
-        /**
-         * 根据view获得期望的高度
-         *
-         * @param view
-         * @return
-         */
-        private static int getExpectHeight(View view) {
-
-            int height = 0;
-            if (view == null) return 0;
-
-            final ViewGroup.LayoutParams params = view.getLayoutParams();
-            //如果是WRAP_CONTENT，此时图片还没加载，getWidth根本无效
-            if (params != null && params.height != ViewGroup.LayoutParams.WRAP_CONTENT) {
-                height = view.getWidth(); // 获得实际的宽度
-            }
-            if (height <= 0 && params != null) {
-                height = params.height; // 获得布局文件中的声明的宽度
-            }
-
-            if (height <= 0) {
-                height = getImageViewFieldValue(view, "mMaxHeight");// 获得设置的最大的宽度
-            }
-
-            //如果宽度还是没有获取到，憋大招，使用屏幕的宽度
-            if (height <= 0) {
-                DisplayMetrics displayMetrics = view.getContext().getResources()
-                        .getDisplayMetrics();
-                height = displayMetrics.heightPixels;
-            }
-
-            return height;
-        }
-
-        /**
-         * 根据view获得期望的宽度
-         *
-         * @param view
-         * @return
-         */
-        private static int getExpectWidth(View view) {
-            int width = 0;
-            if (view == null) return 0;
-
-            final ViewGroup.LayoutParams params = view.getLayoutParams();
-            //如果是WRAP_CONTENT，此时图片还没加载，getWidth根本无效
-            if (params != null && params.width != ViewGroup.LayoutParams.WRAP_CONTENT) {
-                width = view.getWidth(); // 获得实际的宽度
-            }
-            if (width <= 0 && params != null) {
-                width = params.width; // 获得布局文件中的声明的宽度
-            }
-
-            if (width <= 0) {
-                width = getImageViewFieldValue(view, "mMaxWidth");// 获得设置的最大的宽度
-            }
-            //如果宽度还是没有获取到，憋大招，使用屏幕的宽度
-            if (width <= 0) {
-                DisplayMetrics displayMetrics = view.getContext().getResources()
-                        .getDisplayMetrics();
-                width = displayMetrics.widthPixels;
-            }
-
-            return width;
-        }
-
-        /**
-         * 通过反射获取imageview的某个属性值
-         *
-         * @param object
-         * @param fieldName
-         * @return
-         */
-        private static int getImageViewFieldValue(Object object, String fieldName) {
-            int value = 0;
-            try {
-                Field field = ImageView.class.getDeclaredField(fieldName);
-                field.setAccessible(true);
-                int fieldValue = field.getInt(object);
-                if (fieldValue > 0 && fieldValue < Integer.MAX_VALUE) {
-                    value = fieldValue;
-                }
-            } catch (Exception e) {
-            }
-            return value;
-        }
     }
 
 }
