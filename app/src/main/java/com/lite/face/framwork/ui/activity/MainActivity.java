@@ -21,7 +21,7 @@ import com.lite.face.framwork.bean.normal.VersionBean;
 import com.lite.face.framwork.request.RequestPolicy;
 import com.lite.face.framwork.ui.base.AppConstants;
 import com.lite.face.framwork.ui.base.BaseActivity;
-import com.lite.face.framwork.ui.base.CommonAdapter;
+import com.lite.face.framwork.util.CommonAdapter;
 import com.lite.face.framwork.util.ViewHolder;
 
 import java.util.ArrayList;

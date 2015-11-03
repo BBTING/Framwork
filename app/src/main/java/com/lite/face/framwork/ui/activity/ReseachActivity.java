@@ -23,7 +23,7 @@ import com.lite.face.framwork.bean.normal.PrimaryType;
 import com.lite.face.framwork.bean.normal.SecondaryType;
 import com.lite.face.framwork.bean.normal.SubType;
 import com.lite.face.framwork.ui.base.BaseActivity;
-import com.lite.face.framwork.ui.base.CommonAdapter;
+import com.lite.face.framwork.util.CommonAdapter;
 import com.lite.face.framwork.util.ViewHolder;
 import com.lite.face.framwork.ui.widget.FixedGridView;
 import com.lite.face.framwork.ui.widget.InnerPopupWindow;

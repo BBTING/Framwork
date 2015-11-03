@@ -15,7 +15,7 @@ import com.lite.face.framwork.R;
 import com.lite.face.framwork.bean.ExtraBean;
 import com.lite.face.framwork.util.ACache;
 import com.lite.face.framwork.ui.base.BaseActivity;
-import com.lite.face.framwork.ui.base.CommonAdapter;
+import com.lite.face.framwork.util.CommonAdapter;
 import com.lite.face.framwork.util.ViewHolder;
 
 import java.util.Arrays;

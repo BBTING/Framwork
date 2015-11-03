@@ -23,7 +23,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.lite.face.framwork.R;
-import com.lite.face.framwork.ui.base.CommonAdapter;
+import com.lite.face.framwork.util.CommonAdapter;
 import com.lite.face.framwork.util.ViewHolder;
 
 import java.util.ArrayList;

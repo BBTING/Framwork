@@ -23,7 +23,7 @@ import android.widget.TextView;
 
 import com.lite.face.framwork.R;
 import com.lite.face.framwork.bean.normal.InnerType;
-import com.lite.face.framwork.ui.base.CommonAdapter;
+import com.lite.face.framwork.util.CommonAdapter;
 import com.lite.face.framwork.util.ViewHolder;
 
 import java.util.List;

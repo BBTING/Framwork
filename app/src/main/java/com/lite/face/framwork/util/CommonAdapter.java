@@ -1,12 +1,10 @@
-package com.lite.face.framwork.ui.base;
+package com.lite.face.framwork.util;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-
-import com.lite.face.framwork.util.ViewHolder;
 
 import java.util.List;
 

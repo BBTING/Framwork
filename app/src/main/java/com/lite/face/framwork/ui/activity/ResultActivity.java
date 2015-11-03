@@ -212,7 +212,13 @@ public class ResultActivity extends BaseActivity {
         ACache.get(getApplicationContext()).put(prefix + user, asthmaType);
         String prefixUser = ACache.get(getApplicationContext()).getAsString(getDeviceOpenID());
         if (prefixUser != null) {
+            String[] prefixUsers = prefixUser.split(";;");
             prefixUser = prefixUser + ";;" + prefix + user;
+            for (String _prefix : prefixUsers) {
+                if (!TextUtils.isEmpty(_prefix) && _prefix.equals(prefixUser)) {//已存储
+                    Toast.makeText(this, "用户 " + user + " 调查数据已存在", Toast.LENGTH_SHORT).show();
+                }
+            }
         } else {
             prefixUser = prefix + user;
         }
@@ -236,8 +242,8 @@ public class ResultActivity extends BaseActivity {
         List<SecondaryType> secondaryTypes2 = new ArrayList<>();
         List<SecondaryType> secondaryTypes3 = new ArrayList<>();
         List<SecondaryType> secondaryTypes4 = new ArrayList<>();
-        List<SecondaryType> secondaryTypes11= new ArrayList<>();
-        List<SecondaryType> secondaryTypes21= new ArrayList<>();
+        List<SecondaryType> secondaryTypes11 = new ArrayList<>();
+        List<SecondaryType> secondaryTypes21 = new ArrayList<>();
         for (PrimaryType primaryType : primaryTypes) {
             List<SecondaryType> secondaryTypes = primaryType.mSecondTypes;
             for (SecondaryType secondaryType : secondaryTypes) {
@@ -280,7 +286,7 @@ public class ResultActivity extends BaseActivity {
         if (sumDo == 0 && priority_0 != 0) {
             sumDo -= 5;
         }
-        if (sumDo  != 0) {
+        if (sumDo != 0) {
             sumDo += priority_21;
         }
         if (sumDo > 0) {
@@ -299,16 +305,6 @@ public class ResultActivity extends BaseActivity {
             sumDo = priority_4 + sumTmp;
         }
         return 100 + sumDo;
-       /* double sumDouble = priority_0 + priority_1;
-        sumDouble = priority_2 < 0 ? sumDouble / 5 + priority_2 : sumDouble + priority_2;
-        if (priority_3 < 0) {//紫色发生
-            sumDouble += Math.max(sumDouble, (double) priority_3);//紫色与非红综合分数高者
-        }
-        if (priority_4 < 0) {
-            sumDouble /= 10;
-            sumDouble += priority_4;
-        }
-        return (100 + sumDouble);*/
     }
 
     /**

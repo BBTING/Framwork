@@ -11,6 +11,11 @@ import android.telephony.TelephonyManager;
  */
 public class DeviceUtil {
 
+    /**
+     * 获取设备ID
+     * @param context
+     * @return
+     */
     public static String getDeviceOpenID(Context context) {
         TelephonyManager telephonyManager = (TelephonyManager) context.getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
         return telephonyManager.getDeviceId();
