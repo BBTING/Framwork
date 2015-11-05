@@ -1,4 +1,4 @@
-package com.lite.face.framwork.ui.activity;
+package com.lite.face.framwork.ui.abort;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -6,7 +6,6 @@ import android.os.HandlerThread;
 import android.util.Log;
 
 import com.lite.face.framwork.R;
-import com.lite.face.framwork.bean.ExtraBean;
 import com.lite.face.framwork.ui.base.BaseActivity;
 
 import java.util.concurrent.TimeUnit;
@@ -91,8 +90,4 @@ public class RxAndroidActivity extends BaseActivity {
         }
     }
 
-    @Override
-    protected void doUpdate(ExtraBean extraBean) {
-
-    }
 }

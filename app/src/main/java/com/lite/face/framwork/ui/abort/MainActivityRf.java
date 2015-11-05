@@ -1,4 +1,4 @@
-package com.lite.face.framwork.ui.activity;
+package com.lite.face.framwork.ui.abort;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,13 +15,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.lite.face.framwork.R;
-import com.lite.face.framwork.bean.ExtraBean;
+import com.lite.face.framwork.common.util.CommonAdapter;
+import com.lite.face.framwork.common.util.PreferenceUtil;
+import com.lite.face.framwork.common.util.ViewHolder;
+import com.lite.face.framwork.common.widget.BankPopupWindow;
+import com.lite.face.framwork.common.widget.FixedGridView;
+import com.lite.face.framwork.ui.activity.ResearchActivity;
 import com.lite.face.framwork.ui.base.BaseActivity;
-import com.lite.face.framwork.util.CommonAdapter;
-import com.lite.face.framwork.util.ViewHolder;
-import com.lite.face.framwork.util.PreferenceUtil;
-import com.lite.face.framwork.ui.widget.BankPopupWindow;
-import com.lite.face.framwork.ui.widget.FixedGridView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -105,7 +105,7 @@ public class MainActivityRf extends BaseActivity {
         setContentView(R.layout.activity_main_rf);
         ButterKnife.bind(this);
         initSteps();
-        Intent intent = new Intent(this, ReseachActivity.class);
+        Intent intent = new Intent(this, ResearchActivity.class);
         startActivityForResult(intent, 100);
     }
 
@@ -166,13 +166,6 @@ public class MainActivityRf extends BaseActivity {
             }
         });
     }
-
-
-    @Override
-    protected void doUpdate(ExtraBean extraBean) {
-
-    }
-
 
     private void resetSecondaryGridView(int index) {
         mSecondaryTv0.setText(PRIMARYTITLES[index]);

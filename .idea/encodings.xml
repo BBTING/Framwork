@@ -3,7 +3,6 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/app/libs/library-1.0.19.jar" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/libs/okhttp-urlconnection-2.0.0.jar" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/lite/face/framwork/bean/JsonUtil.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/lite/face/framwork/common/util/ACache.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/lite/face/framwork/common/util/PreferenceUtil.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/lite/face/framwork/common/widget/BankPopupWindow.java" charset="UTF-8" />

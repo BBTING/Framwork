@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -15,22 +14,18 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.easybenefit.commons.rest.RestClientContext;
-import com.easybenefit.commons.rest.ServiceCallback;
 import com.lite.face.framwork.R;
-import com.lite.face.framwork.bean.ExtraBean;
 import com.lite.face.framwork.bean.normal.AsthmaFactory;
 import com.lite.face.framwork.bean.normal.AsthmaType;
 import com.lite.face.framwork.bean.normal.InnerType;
 import com.lite.face.framwork.bean.normal.PrimaryType;
 import com.lite.face.framwork.bean.normal.SecondaryType;
 import com.lite.face.framwork.bean.normal.SubType;
-import com.lite.face.framwork.inteface.ClientService;
+import com.lite.face.framwork.common.util.CommonAdapter;
+import com.lite.face.framwork.common.util.ViewHolder;
+import com.lite.face.framwork.common.widget.FixedGridView;
+import com.lite.face.framwork.common.widget.InnerPopupWindow;
 import com.lite.face.framwork.ui.base.BaseActivity;
-import com.lite.face.framwork.ui.widget.FixedGridView;
-import com.lite.face.framwork.ui.widget.InnerPopupWindow;
-import com.lite.face.framwork.util.CommonAdapter;
-import com.lite.face.framwork.util.ViewHolder;
 
 import java.util.List;
 
@@ -38,7 +33,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ReseachActivity extends BaseActivity {
+public class ResearchActivity extends BaseActivity {
 
 
     @Bind(R.id.type_lv)
@@ -56,124 +51,120 @@ public class ReseachActivity extends BaseActivity {
 
     private long mExitTime;
 
-    private static boolean DEBUG = true;
+    private AsthmaType mAsthmaType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main_rf);
+
         ButterKnife.bind(this);
+
         initSteps();
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        if (DEBUG) {
-            doTest();
-        }
-    }
-
-    @Override
     protected void onDestroy() {
+
         super.onDestroy();
         ButterKnife.unbind(this);
     }
 
     @Override
     protected void initTopbarViews() {
+
         super.initTopbarViews();
+
         mHeaderLeftIv.setVisibility(View.GONE);
         mWidth = getDisplayMetrics().widthPixels / 3 - 10;
+
         initPrimaryTitlesLv();
+
         mPrimaryLv.performItemClick(mPrimaryLv.getChildAt(0), 0, -1);
     }
 
     @Override
     protected void initOthers() {
+
         super.initOthers();
-
     }
 
-    private void doTest() {
-
-        ClientService userService = RestClientContext.create(ClientService.class);
-
-        userService.doSomething("key", mServiceCallback);
-    }
-
-    private ServiceCallback<String> mServiceCallback = new ServiceCallback<String>() {
-        @Override
-        public void onFailed(String statusCode, String errorMessage) {
-            Log.i(TAG, errorMessage + "");
-        }
-
-        @Override
-        public void onSuccess(String response) {
-            Log.i(TAG, response + "");
-        }
-    };
-
-    private AsthmaType mAsthmaType;
 
     private void initPrimaryTitlesLv() {
+
         AsthmaFactory factory = new AsthmaFactory();
         factory.initAsthmaData();
+
         mAsthmaType = factory.asthmaType;
+
         final CommonAdapter<PrimaryType> commonAdapter = new CommonAdapter<PrimaryType>(this, R.layout.item_type_layout, mAsthmaType.mPrimaryTypes) {
+
             @Override
             protected void convert(ViewHolder viewHolder, PrimaryType primaryType) {
+
                 viewHolder.setText(R.id.type_tv, primaryType.mTitle);
             }
 
             @Override
             protected void invokSlectedView(ViewHolder viewHolder, boolean selected) {
+
                 viewHolder.getConvertView().setBackgroundColor(selected ? getResources().getColor(R.color.color_pressed) : getResources().getColor(R.color.color_unpressed));
                 viewHolder.setViewVisiable(R.id.tag_vi, selected ? View.VISIBLE : View.INVISIBLE);
             }
         };
+
         mPrimaryLv.setAdapter(commonAdapter);
         mPrimaryLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 commonAdapter.setSelectedPostion(position);
+
                 for (PrimaryType primaryType : mAsthmaType.mPrimaryTypes) {
+
                     primaryType.mSelected = false;
                 }
+
                 mAsthmaType.mPrimaryTypes.get(position).mSelected = true;
+
                 resetSecondaryGridView(position);
             }
         });
     }
 
-
-    @Override
-    protected void doUpdate(ExtraBean extraBean) {
-
-    }
-
     @SuppressWarnings("unused")
     @OnClick(R.id.header_right_tv)
     protected void onClickSubmitBtn(View view) {
+
         if (mAsthmaType != null && mAsthmaType.mPrimaryTypes != null) {
+
             for (PrimaryType primaryType : mAsthmaType.mPrimaryTypes) {
+
                 List<SecondaryType> secondaryTypes = primaryType.mSecondTypes;
+
                 for (SecondaryType secondaryType : secondaryTypes) {
+
                     List<SubType> subTypes = secondaryType.mSubTypes;
                     boolean selected = false;
                     for (SubType subType : subTypes) {
+
                         if (!selected) {
+
                             selected = subType.mSelected;
                         }
                     }
                     if (!selected) {
+
                         Toast.makeText(this, secondaryType.mTitle + "未选择", Toast.LENGTH_SHORT).show();
                         return;
                     }
                 }
             }
         }
-        Intent intent = new Intent(this, ResultActivity.class);
+        Intent intent = new Intent(this, InquiryDetailActivity.class);
         intent.putExtra("Key", mAsthmaType);
         startActivityForResult(intent, 100);
     }
@@ -257,7 +248,7 @@ public class ReseachActivity extends BaseActivity {
                             mSubTypes.get(i).mSelected = true;
                         }
                         final SubType subType = mSubTypes.get(i);
-                        InnerPopupWindow bankPopupWindow = new InnerPopupWindow(ReseachActivity.this);
+                        InnerPopupWindow bankPopupWindow = new InnerPopupWindow(ResearchActivity.this);
                         bankPopupWindow.initListView(mSubTypes.get(i).mInnerTypes, getDisplayMetrics().widthPixels - 20);
                         bankPopupWindow.setInnerCallback(new InnerPopupWindow.InnerCallback() {
                             @Override
@@ -301,6 +292,7 @@ public class ReseachActivity extends BaseActivity {
         }
 
         public GridViewAdapter(Context context, List<SubType> datas, int width, boolean isMulti) {
+
             super(context, R.layout.item_gridview_layout, datas);
             mGridViewWidth = width;
             mMultiSelect = isMulti;
@@ -309,11 +301,14 @@ public class ReseachActivity extends BaseActivity {
 
         @Override
         protected void convert(ViewHolder viewHolder, SubType s) {
+
             viewHolder.setText(R.id.item_tv, s.mTitle);
             if (s.mSelected) {
+
                 viewHolder.getConvertView().setSelected(true);
                 viewHolder.setViewVisiable(R.id.selecte_iv, View.VISIBLE);
             } else {
+
                 viewHolder.getConvertView().setSelected(false);
                 viewHolder.setViewVisiable(R.id.selecte_iv, View.GONE);
             }
@@ -330,11 +325,15 @@ public class ReseachActivity extends BaseActivity {
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+
         if (keyCode == KeyEvent.KEYCODE_BACK) {
+
             if ((System.currentTimeMillis() - mExitTime) > 2500) {
+
                 Toast.makeText(this, "再按一次退出", Toast.LENGTH_SHORT).show();
                 mExitTime = System.currentTimeMillis();
             } else {
+
                 finish();
             }
             return true;

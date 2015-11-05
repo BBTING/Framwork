@@ -12,11 +12,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.lite.face.framwork.R;
-import com.lite.face.framwork.bean.ExtraBean;
-import com.lite.face.framwork.util.ACache;
 import com.lite.face.framwork.ui.base.BaseActivity;
-import com.lite.face.framwork.util.CommonAdapter;
-import com.lite.face.framwork.util.ViewHolder;
+import com.lite.face.framwork.common.util.ACache;
+import com.lite.face.framwork.common.util.CommonAdapter;
+import com.lite.face.framwork.common.util.ViewHolder;
 
 import java.util.Arrays;
 import java.util.List;
@@ -31,7 +30,7 @@ import butterknife.OnClick;
  * Copyright: 杭州医本健康科技有限公司(2014-2015)
  * Description:
  */
-public class SelectUserActivity extends BaseActivity {
+public class InquiryDatasActivity extends BaseActivity {
 
     @Bind(R.id.header_center_tv)
     TextView mHeaderCenterTv;
@@ -112,6 +111,7 @@ public class SelectUserActivity extends BaseActivity {
 
     /**
      * 获取用户已存储的所有用户ID
+     *
      * @return
      */
     private List<String> getStoredUserId() {
@@ -122,11 +122,6 @@ public class SelectUserActivity extends BaseActivity {
             return Arrays.asList(users);
         }
         return null;
-    }
-
-    @Override
-    protected void doUpdate(ExtraBean extraBean) {
-
     }
 
     public String getDeviceOpenID() {

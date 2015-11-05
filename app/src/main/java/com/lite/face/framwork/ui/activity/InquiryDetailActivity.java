@@ -16,15 +16,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lite.face.framwork.R;
-import com.lite.face.framwork.bean.ExtraBean;
 import com.lite.face.framwork.bean.normal.AsthmaType;
 import com.lite.face.framwork.bean.normal.InnerType;
 import com.lite.face.framwork.bean.normal.PrimaryType;
 import com.lite.face.framwork.bean.normal.SecondaryType;
 import com.lite.face.framwork.bean.normal.SubType;
-import com.lite.face.framwork.util.ACache;
-import com.lite.face.framwork.util.MathUtil;
 import com.lite.face.framwork.ui.base.BaseActivity;
+import com.lite.face.framwork.common.util.ACache;
+import com.lite.face.framwork.common.util.MathUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +38,7 @@ import butterknife.OnClick;
  * Copyright: 杭州医本健康科技有限公司(2014-2015)
  * Description:
  */
-public class ResultActivity extends BaseActivity {
+public class InquiryDetailActivity extends BaseActivity {
     @Bind(R.id.header_center_tv)
     TextView mHeaderCenterTv;
     @Bind(R.id.header_right_tv)
@@ -168,7 +167,7 @@ public class ResultActivity extends BaseActivity {
     @SuppressWarnings("unused")
     @OnClick(R.id.header_right_iv)
     protected void onClickHeaderRightIv(View view) {
-        Intent intent = new Intent(this, SelectUserActivity.class);
+        Intent intent = new Intent(this, InquiryDatasActivity.class);
         startActivityForResult(intent, 100);
     }
 
@@ -224,12 +223,6 @@ public class ResultActivity extends BaseActivity {
         }
         ACache.get(getApplicationContext()).put(getDeviceOpenID(), prefixUser);
     }
-
-    @Override
-    protected void doUpdate(ExtraBean extraBean) {
-
-    }
-
 
     private double calculate(AsthmaType asthmaType) {
         if (asthmaType == null) {
