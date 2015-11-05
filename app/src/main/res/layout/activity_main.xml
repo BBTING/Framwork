@@ -60,7 +60,7 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/x28"/>
 
-                <com.lite.face.framwork.ui.widget.FixedGridView
+                <com.lite.face.framwork.common.widget.FixedGridView
                     android:id="@+id/move_limit_gv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/x28"/>
 
-                <com.lite.face.framwork.ui.widget.FixedGridView
+                <com.lite.face.framwork.common.widget.FixedGridView
                     android:id="@+id/abnormal_mood_gv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -108,7 +108,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/x28"/>
 
-            <com.lite.face.framwork.ui.widget.FixedGridView
+            <com.lite.face.framwork.common.widget.FixedGridView
                 android:id="@+id/peak_meter_gv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -131,7 +131,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/x28"/>
 
-            <com.lite.face.framwork.ui.widget.FixedGridView
+            <com.lite.face.framwork.common.widget.FixedGridView
                 android:id="@+id/breathing_gv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -154,7 +154,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/x28"/>
 
-            <com.lite.face.framwork.ui.widget.FixedGridView
+            <com.lite.face.framwork.common.widget.FixedGridView
                 android:id="@+id/symptom_gv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -177,7 +177,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/x28"/>
 
-            <com.lite.face.framwork.ui.widget.FixedGridView
+            <com.lite.face.framwork.common.widget.FixedGridView
                 android:id="@+id/sleeping_gv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -200,7 +200,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/x28"/>
 
-            <com.lite.face.framwork.ui.widget.FixedGridView
+            <com.lite.face.framwork.common.widget.FixedGridView
                 android:id="@+id/shit_gv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -223,7 +223,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/x28"/>
 
-            <com.lite.face.framwork.ui.widget.FixedGridView
+            <com.lite.face.framwork.common.widget.FixedGridView
                 android:id="@+id/the_drug_use_gv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -246,7 +246,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/x28"/>
 
-            <com.lite.face.framwork.ui.widget.FixedGridView
+            <com.lite.face.framwork.common.widget.FixedGridView
                 android:id="@+id/multi_drug_use_gv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -269,7 +269,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/x28"/>
 
-            <com.lite.face.framwork.ui.widget.FixedGridView
+            <com.lite.face.framwork.common.widget.FixedGridView
                 android:id="@+id/smoking_gv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -292,7 +292,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/x28"/>
 
-            <com.lite.face.framwork.ui.widget.FixedGridView
+            <com.lite.face.framwork.common.widget.FixedGridView
                 android:id="@+id/spicy_food_gv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -315,7 +315,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/x28"/>
 
-            <com.lite.face.framwork.ui.widget.FixedGridView
+            <com.lite.face.framwork.common.widget.FixedGridView
                 android:id="@+id/sea_food_gv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -338,7 +338,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/x28"/>
 
-            <com.lite.face.framwork.ui.widget.FixedGridView
+            <com.lite.face.framwork.common.widget.FixedGridView
                 android:id="@+id/allergy_food_gv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -361,7 +361,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/x28"/>
 
-            <com.lite.face.framwork.ui.widget.FixedGridView
+            <com.lite.face.framwork.common.widget.FixedGridView
                 android:id="@+id/pet_gv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -384,7 +384,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/x28"/>
 
-            <com.lite.face.framwork.ui.widget.FixedGridView
+            <com.lite.face.framwork.common.widget.FixedGridView
                 android:id="@+id/drugs_gv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -407,7 +407,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/x28"/>
 
-            <com.lite.face.framwork.ui.widget.FixedGridView
+            <com.lite.face.framwork.common.widget.FixedGridView
                 android:id="@+id/walk_gv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -430,7 +430,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/x28"/>
 
-            <com.lite.face.framwork.ui.widget.FixedGridView
+            <com.lite.face.framwork.common.widget.FixedGridView
                 android:id="@+id/breaking_exercises_gv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -454,7 +454,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/x28"/>
 
-            <com.lite.face.framwork.ui.widget.FixedGridView
+            <com.lite.face.framwork.common.widget.FixedGridView
                 android:id="@+id/self_feeling_gv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

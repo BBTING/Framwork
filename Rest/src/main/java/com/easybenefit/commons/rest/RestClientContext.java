@@ -38,4 +38,15 @@ public class RestClientContext {
 
         return (T) Proxy.newProxyInstance(clientInterface.getClassLoader(), new Class[]{ clientInterface }, new DynamicRestClientProxy());
     }
+
+    /**
+     * 动态创建业务服务的代理对象
+     * @param clientInterface 业务服务对象的类型（只支持接口）
+     * @param <T> 返回指定类型的业务服务对象代理实例
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> T create(Class<T> clientInterface, RestClient restClient) {
+        return (T) Proxy.newProxyInstance(clientInterface.getClassLoader(), new Class[]{ clientInterface }, new DynamicRestClientProxy(restClient));
+    }
 }

@@ -3,6 +3,7 @@ package com.easybenefit.commons.rest.impl;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.alibaba.fastjson.JSONException;
 import com.easybenefit.commons.rest.MethodType;
 import com.easybenefit.commons.rest.RestClient;
 import com.easybenefit.commons.rest.RestClientContext;
@@ -16,11 +17,10 @@ import com.easybenefit.commons.rest.annotations.Interceptors;
 import com.easybenefit.commons.rest.annotations.Param;
 import com.easybenefit.commons.rest.annotations.Post;
 import com.easybenefit.commons.rest.annotations.Put;
-import com.easybenefit.commons.rest.impl.delegate.GetRequest;
 import com.easybenefit.commons.rest.interceptor.RequestInterceptor;
-import com.squareup.okhttp.OkHttpClient;
-
-import org.w3c.dom.TypeInfo;
+import com.easybenefit.commons.rest.util.ReqCallbackUtils;
+import com.easybenefit.commons.rest.util.ReqHelper;
+import com.easybenefit.commons.rest.util.TypeInfo;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationHandler;
@@ -40,7 +40,7 @@ public class DynamicRestClientProxy implements InvocationHandler {
 
     public DynamicRestClientProxy() {
 
-        this(new RestClientHttpImpl());
+        this(new DefaultRestClientHttpImpl());
     }
 
     public DynamicRestClientProxy(RestClient restClient) {
@@ -48,9 +48,6 @@ public class DynamicRestClientProxy implements InvocationHandler {
         this.restClient = restClient;
     }
 
-    /*
-    Method threw 'java.lang.reflect.UndeclaredThrowableException' exception. Cannot evaluate $Proxy1.toString()
-     */
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 
@@ -117,7 +114,6 @@ public class DynamicRestClientProxy implements InvocationHandler {
                         break;
                     } else if (annotation instanceof Body) {
 
-
                         bodyParameters = args[index];
                         break top;
                     }
@@ -133,8 +129,7 @@ public class DynamicRestClientProxy implements InvocationHandler {
         final List<RequestInterceptor> interceptorList = buildRequestInterceptors(method);
 
         // 异步执行远程的业务服务调用
-        Log.i("ssss", args[args.length - 1].toString());
-        this.doExecuteRealCall(request_url, methodType, args[args.length - 1], parameters, bodyParameters, interceptorList);
+        this.tryToExecuteRemoteCall(request_url, methodType, args[args.length - 1], parameters, bodyParameters, interceptorList);
 
         return null;
     }
@@ -148,9 +143,6 @@ public class DynamicRestClientProxy implements InvocationHandler {
             interceptor.onPreExecute(request_url, null);
         }
 
-        GetRequest getRequest = new GetRequest(new OkHttpClient());
-
-        getRequest.get(request_url, callback);
 
         // 执行拦截器中的onPostExecute
         for (RequestInterceptor interceptor : interceptorList) {
@@ -161,6 +153,7 @@ public class DynamicRestClientProxy implements InvocationHandler {
     }
 
 
+    @SuppressWarnings("unchecked")
     private void tryToExecuteRemoteCall(final String request_url, final MethodType methodType, Object arg, Map<String, Object> parameters, Object bodyParameters, final List<RequestInterceptor> interceptorList) {
 
         final ServiceCallback callback = (ServiceCallback) arg;
@@ -177,37 +170,40 @@ public class DynamicRestClientProxy implements InvocationHandler {
 
                     if (!interceptor.onPreExecute(request_url, heads)) {
 
-                        Log.w(RestClientContext.TAG, "background task was aborted by ..." + interceptor);
                         return RestResponse.AbortRestResponse.make();
                     }
                 }
 
-                Log.w(RestClientContext.TAG, "execute background task ...");
-                return getRestResponse(request_url, methodType, (Map<String, Object>) params[0], params[1]);
+                return getRestResponse(request_url, methodType, (Map<String, Object>) params[0], params[1], heads);
             }
 
             protected void onPostExecute(RestResponse result) {
 
                 if (result == null || callback == null) {
 
-                    Log.w(RestClientContext.TAG, "result or callback is null");
                     return;
                 }
 
                 if (result instanceof RestResponse.AbortRestResponse) {
 
-                    Log.w(RestClientContext.TAG, "background[" + request_url + "] task was aborted by");
                     return;
                 }
 
                 if (result.statusCode.equals("1")) {
 
-                    TypeInfo typeInfo = null;//ReqCallbackUtils.getCallbackGenericType(callback.getClass());
+                    TypeInfo typeInfo = ReqCallbackUtils.getCallbackGenericType(callback.getClass());
                     String data = result.responseBody;
 
-                    Object serviceResult = null;//ReqHelper.parseHttpResult(typeInfo, data);
+                    try {
 
-                    callback.onSuccess(serviceResult);
+                        Object serviceResult = ReqHelper.parseHttpResult(typeInfo, data);
+
+                        callback.onSuccess(serviceResult);
+                    } catch (JSONException jsonException) {
+
+                        callback.onFailed(String.valueOf(RestClient.ERROR_PARSER), jsonException.toString());
+                    }
+
                 } else {
 
                     callback.onFailed(result.statusCode, result.errorMessage);
@@ -270,7 +266,7 @@ public class DynamicRestClientProxy implements InvocationHandler {
         return interceptorList;
     }
 
-    private RestResponse getRestResponse(String request_url, MethodType methodType, Map<String, Object> parameters, Object bodyParameters) {
+    private RestResponse getRestResponse(String request_url, MethodType methodType, Map<String, Object> parameters, Object bodyParameters, Map<String, String> header) {
 
         RestResponse result = null;
         switch (methodType) {
@@ -279,40 +275,40 @@ public class DynamicRestClientProxy implements InvocationHandler {
 
                 if (bodyParameters == null) {
 
-                    result = this.restClient.doGet(request_url, parameters);
+                    result = this.restClient.doGet(request_url, parameters, header);
                 } else {
 
-                    result = this.restClient.doGet(request_url, bodyParameters);
+                    result = this.restClient.doGet(request_url, bodyParameters, header);
                 }
                 break;
             case PUT:
 
                 if (bodyParameters == null) {
 
-                    result = this.restClient.doPut(request_url, parameters);
+                    result = this.restClient.doPut(request_url, parameters, header);
                 } else {
 
-                    result = this.restClient.doPut(request_url, bodyParameters);
+                    result = this.restClient.doPut(request_url, bodyParameters, header);
                 }
                 break;
             case POST:
 
                 if (bodyParameters == null) {
 
-                    result = this.restClient.doPost(request_url, parameters);
+                    result = this.restClient.doPost(request_url, parameters, header);
                 } else {
 
-                    result = this.restClient.doPost(request_url, bodyParameters);
+                    result = this.restClient.doPost(request_url, bodyParameters, header);
                 }
                 break;
             case DELETE:
 
                 if (bodyParameters == null) {
 
-                    result = this.restClient.doDelete(request_url, parameters);
+                    result = this.restClient.doDelete(request_url, parameters, header);
                 } else {
 
-                    result = this.restClient.doDelete(request_url, bodyParameters);
+                    result = this.restClient.doDelete(request_url, bodyParameters, header);
                 }
                 break;
         }

@@ -58,7 +58,7 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/x30"/>
 
-                <com.lite.face.framwork.ui.widget.FixedGridView
+                <com.lite.face.framwork.common.widget.FixedGridView
                     android:id="@+id/type_gv0"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/x30"/>
 
-                <com.lite.face.framwork.ui.widget.FixedGridView
+                <com.lite.face.framwork.common.widget.FixedGridView
                     android:id="@+id/type_gv1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

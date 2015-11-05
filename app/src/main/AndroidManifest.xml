@@ -3,6 +3,14 @@
     package="com.lite.face.framwork"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    著作权归作者所有。
+    商业转载请联系作者获得授权，非商业转载请注明出处。
+    作者：董幸荣
+    链接：http://www.zhihu.com/question/22289719/answer/23990073
+    来源：知乎
+
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
@@ -31,7 +39,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.activity.ReseachActivity"
+            android:name=".ui.activity.ResearchActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -41,23 +49,23 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activity.RxAndroidActivity"
+            android:name=".ui.abort.RxAndroidActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.activity.MainActivityRf"
+            android:name=".ui.abort.MainActivityRf"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.activity.MainActivity"
+            android:name=".ui.abort.MainActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.activity.ResultActivity"
+            android:name=".ui.activity.InquiryDetailActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.activity.SelectUserActivity"
+            android:name=".ui.activity.InquiryDatasActivity"
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".ui.activity.RestActivity"
+            android:name=".ui.test.RestActivity"
             android:screenOrientation="portrait"/>
     </application>
 

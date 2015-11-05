@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.lite.face.framwork.ui.widget.FixedListView
+            <com.lite.face.framwork.common.widget.FixedListView
                 android:id="@+id/result_lv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
